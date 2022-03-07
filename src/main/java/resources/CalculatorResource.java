@@ -39,6 +39,8 @@ public class CalculatorResource {
          */
         if(expressionTrimmed.matches("[0-9]+[+][0-9]+")) result = sum(expressionTrimmed);
         else if(expressionTrimmed.matches("[0-9]+[-][0-9]+")) result = subtraction(expressionTrimmed);
+        else if(expressionTrimmed.matches("[0-9]+[/][0-9]+")) result = division(expressionTrimmed);
+        else if(expressionTrimmed.matches("[0-9]+[*][0-9]+")) result = multiplication(expressionTrimmed);
 
         return result;
     }

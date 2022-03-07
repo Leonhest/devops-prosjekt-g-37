@@ -14,6 +14,12 @@ public class CalculatorResourceTest{
 
         expression = " 300 - 99 ";
         assertEquals(201, calculatorResource.calculate(expression));
+
+        expression = " 300 * 2 ";
+        assertEquals(600, calculatorResource.calculate(expression));
+
+        expression = " 300 / 2 ";
+        assertEquals(150, calculatorResource.calculate(expression));
     }
 
     @Test
