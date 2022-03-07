@@ -35,6 +35,6 @@ public class CalculatorResourceTest{
         assertEquals(899, calculatorResource.subtraction(expression));
 
         expression = "20-2";
-        assertEquals(200, calculatorResource.subtraction(expression));
+        assertEquals(18, calculatorResource.subtraction(expression));
     }
 }
