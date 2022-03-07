@@ -43,4 +43,27 @@ public class CalculatorResourceTest{
         expression = "20-2";
         assertEquals(18, calculatorResource.subtraction(expression));
     }
+
+    @Test
+    public void testDivision(){
+        CalculatorResource calculatorResource = new CalculatorResource();
+
+        String expression = "100/10";
+        assertEquals(10, calculatorResource.division(expression));
+
+        expression = "300/3";
+        assertEquals(100, calculatorResource.division(expression));
+    }
+
+    @Test
+    public void testMultiplication(){
+        CalculatorResource calculatorResource = new CalculatorResource();
+
+        String expression = "2*2";
+        assertEquals(4, calculatorResource.multiplication(expression));
+
+        expression = "3*3";
+        assertEquals(9, calculatorResource.multiplication(expression));
+    }
+
 }
