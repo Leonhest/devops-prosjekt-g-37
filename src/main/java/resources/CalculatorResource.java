@@ -21,11 +21,11 @@ public class CalculatorResource {
     @POST
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_PLAIN)
-    public int calculate(String expression){
+    public String calculate(String expression){
         // Removes all whitespaces
         String expressionTrimmed = expression.replaceAll("\\s+","");
 
-        int result = -1;
+        String result = "Wrong format";
 
         /*
          * .matches use regex expression to decide if a String matches a given pattern.
@@ -37,11 +37,10 @@ public class CalculatorResource {
          * 1+2,
          * 10000+1000
          */
-        if(expressionTrimmed.matches("[0-9]+[+][0-9]+")) result = sum(expressionTrimmed);
-        else if(expressionTrimmed.matches("[0-9]+[-][0-9]+")) result = subtraction(expressionTrimmed);
-        else if(expressionTrimmed.matches("[0-9]+[/][0-9]+")) result = division(expressionTrimmed);
-        else if(expressionTrimmed.matches("[0-9]+[*][0-9]+")) result = multiplication(expressionTrimmed);
-
+        if(expressionTrimmed.matches("^\\d+(?:\\s*[+]\\s*\\d+)*$")) result = String.valueOf(sum(expressionTrimmed));
+        else if(expressionTrimmed.matches("^\\d+(?:\\s*[-]\\s*\\d+)*$")) result = String.valueOf(subtraction(expressionTrimmed));
+        else if(expressionTrimmed.matches("^\\d+(?:\\s*[/]\\s*\\d+)*$")) result = String.valueOf(division(expressionTrimmed));
+        else if(expressionTrimmed.matches("^\\d+(?:\\s*[*]\\s*\\d+)*$")) result = String.valueOf(multiplication(expressionTrimmed));
         return result;
     }
 
@@ -53,10 +52,11 @@ public class CalculatorResource {
     public int sum(String expression){
         String[] split = expression.split("[+]");
 
-        int number1 = Integer.parseInt(split[0]);
-        int number2 = Integer.parseInt(split[1]);
-
-        return number1 + number2;
+        int answer = 0;
+        for (int i = 0; i < split.length; i++) {
+            answer += Integer.parseInt(split[i]);
+        }
+        return answer;
     }
 
     /**
@@ -67,28 +67,41 @@ public class CalculatorResource {
     public int subtraction(String expression){
         String[] split = expression.split("[-]");
 
-        int number1 = Integer.parseInt(split[0]);
-        int number2 = Integer.parseInt(split[1]);
-
-        return number1 - number2;
+        int answer = Integer.parseInt(split[0]);
+        for (int i = 1; i < split.length; i++) {
+            answer -= Integer.parseInt(split[i]);
+        }
+        return answer;
     }
 
+    /**
+     * Method used to calculate a multiplication expression.
+     * @param expression the expression to be calculated as a String
+     * @return the answer as an int
+     */
     public int multiplication(String expression){
         String[] split = expression.split("[*]");
 
-        int number1 = Integer.parseInt(split[0]);
-        int number2 = Integer.parseInt(split[1]);
+        int answer = 1;
+        for (int i = 0; i < split.length; i++) {
 
-        return number1 * number2;
+            answer *= Integer.parseInt(split[i]);
+        }
+        return answer;
     }
 
-
+    /**
+     * Method used to calculate a division expression.
+     * @param expression the expression to be calculated as a String
+     * @return the answer as an int
+     */
     public int division(String expression){
         String[] split = expression.split("[/]");
 
-        int number1 = Integer.parseInt(split[0]);
-        int number2 = Integer.parseInt(split[1]);
-
-        return number1 / number2;
+        int answer = Integer.parseInt(split[0]);
+        for (int i = 1; i < split.length; i++) {
+            answer /= Integer.parseInt(split[i]);
+        }
+        return answer;
     }
 }
