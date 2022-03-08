@@ -5,6 +5,7 @@ import data.User;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Request;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -17,15 +18,16 @@ public class UserResource {
 
     /**
      * Method handling HTTP GET requests
+     *
      * @return List of users as JSON response
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         UserDAO userDAO = new UserDAO();
 
-        new Thread(){
-            public void run(){
+        new Thread() {
+            public void run() {
                 Date date = new Date();
                 int number = 0;
                 boolean run = true;
@@ -34,7 +36,7 @@ public class UserResource {
                     number++;
                     if (number == Integer.MAX_VALUE) {
                         Date newDate = new Date();
-                        if(newDate.getTime()-date.getTime() > 25000) run = false;
+                        if (newDate.getTime() - date.getTime() > 25000) run = false;
                         number = 0;
                     }
                 }
@@ -46,15 +48,23 @@ public class UserResource {
 
     /**
      * Method handling HTTP POST requests
+     *
      * @param user userInformation as String
      * @return the new User if not registered, or the User that matches the username as JSON object
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public User newUser(User user){
+    public User newUser(User user) {
         UserDAO userDAO = new UserDAO();
         return userDAO.addUser(user);
     }
 
+    @PUT
+    @Path("{userId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public boolean editUser(@PathParam("userId") int userId, User user) {
+        UserDAO userDAO = new UserDAO();
+        return userDAO.editUser(userId, user.getUsername(), user.getPassword());
+    }
 }

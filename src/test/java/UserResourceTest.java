@@ -42,7 +42,7 @@ public class UserResourceTest extends JerseyTest {
         assertEquals("application/json",output.getHeaderString("Content-type"));
     }
 
-    /*
+
     @Test
     public void testEditUser () {
         user2.setUserId(10);
@@ -51,5 +51,5 @@ public class UserResourceTest extends JerseyTest {
         assertEquals("Should return status 200", 200, output.getStatus());
         assertEquals("application/json",output.getHeaderString("Content-type"));
         assertNotEquals("testUsername",user2.getUsername());
-    }*/
+    }
 }

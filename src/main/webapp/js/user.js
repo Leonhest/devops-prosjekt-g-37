@@ -4,7 +4,7 @@ window.addEventListener("load", () => {
 });
 document
   .getElementById("currentUser")
-  .appendChild(document.createTextNode(sessionStorage.getItem(username)));
+  .appendChild(document.createTextNode(sessionStorage.getItem("username")));
 let usersFromDb = [];
 let groupChats = [];
 
