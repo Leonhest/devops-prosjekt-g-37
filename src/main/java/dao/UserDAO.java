@@ -1,6 +1,7 @@
 package dao;
 
 import data.User;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -183,7 +184,10 @@ public class UserDAO {
      * @return a random salt
      */
     public byte[] generateSalt() {
-        return null;
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+        return salt;
     }
 
     /**
@@ -193,7 +197,15 @@ public class UserDAO {
      * @return hashedPassword, null if unsuccessful
      */
     public String hashPassword(String password, byte[] salt){
-        return null;
+        String sha256Pass = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i = 0; i < salt.length; i++){
+            stringBuilder.append(Integer.toString((salt[i] & 0xff) + 0x100, 16).substring(1));
+        }
+        String saltstring = stringBuilder.toString();
+        sha256Pass = DigestUtils.sha256Hex(password + saltstring);
+        return sha256Pass;
+
     }
 
     /**
