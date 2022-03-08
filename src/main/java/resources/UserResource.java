@@ -57,4 +57,11 @@ public class UserResource {
         return userDAO.addUser(user);
     }
 
+    @PUT
+    @Path("{userId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public boolean editUser(@PathParam("userId") int userId, User user) {
+        UserDAO userDAO = new UserDAO();
+        return userDAO.editUser(userId, user.getUsername(), user.getPassword());
+    }
 }
